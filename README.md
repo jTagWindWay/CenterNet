@@ -1,153 +1,65 @@
-# Objects as Points
-Object detection, 3D detection, and pose estimation using center point detection:
-![](readme/fig2.png)
-> [**Objects as Points**](http://arxiv.org/abs/1904.07850),            
-> Xingyi Zhou, Dequan Wang, Philipp Kr&auml;henb&uuml;hl,        
-> *arXiv technical report ([arXiv 1904.07850](http://arxiv.org/abs/1904.07850))*         
+# Objects as Points with [MobileNetV2](https://arxiv.org/abs/1801.04381) backbone, training on [DeefFashion2](https://github.com/switchablenorms/DeepFashion2) dataset.
 
 
-Contact: [zhouxy@cs.utexas.edu](mailto:zhouxy@cs.utexas.edu). Any questions or discussions are welcomed! 
+## What was done
+1. Data set preparation.
+- The DeefFashion2 data set uses the following structure: 3 folders test, train, val with images and annotations for each image. To feed the annotations to the CenterNet, we convert the annotations for each image into one file.
+- In src/lib/datasets/dataset. We create a new file "dfashion.py" for our dataset, and change the contents of the file to our own, according to the coco.py in the folder. 
 
-## Updates
+     Change the COCO class to our own name.  
+     
+     Replace num_classes=80 on line 14 with the number of my own categories (In DeepFashion2 13 categories).   
+     
+     Mean and standard value are changed to the mean and std of my own image dataset. I didn’t calculate their values myself, but I googled which ones          they use.    
+     
+     Change the paths to folders with annotations and images.  
+     
+     Change the category names and category IDs to your own.  
+- In src/lib/datasets/dataset_factory.
+     Adding your own dataset name to the dataset_fact dictionary.
+- Edit the file src/lib/utils/debugger.py. Add support for the data set, and indicate the names of the categories.
+     
+2. Arch preparation.
+- Add a file with a MobileNetv2 model to the network folder /src/lib/models.
+- Add architecture to model_factory.py in /src/lib/models/model.py
 
- - (June, 2020) We released a state-of-the-art Lidar-based 3D detection and tracking framework [CenterPoint](https://github.com/tianweiy/CenterPoint).
- - (April, 2020) We released a state-of-the-art (multi-category-/ pose-/ 3d-) tracking extension [CenterTrack](https://github.com/xingyizhou/CenterTrack).
+3. Edit /src/lib/opts.py
+- The first step is to set your own dataset as the default dataset and add it to the help.
+- Change the default dataset used by the ctdet task to the newly added dataset (change resolution, number of categories, mean, std, dataset name).
+- Set MobileNetv2 architecture as default.
 
-## Abstract 
+4. Training. 
+>python main.py ctdet --exp_id dfsh_mbnv2 --batch_size 12 --lr 1.25e-4 --dataset dfashion --arch mbnv2 
 
-Detection identifies objects as axis-aligned boxes in an image. Most successful object detectors enumerate a nearly exhaustive list of potential object locations and classify each. This is wasteful, inefficient, and requires additional post-processing. In this paper, we take a different approach. We model an object as a single point -- the center point of its bounding box. Our detector uses keypoint estimation to find center points and regresses to all other object properties, such as size, 3D location, orientation, and even pose. Our center point based approach, CenterNet, is end-to-end differentiable, simpler, faster, and more accurate than corresponding bounding box based detectors. CenterNet achieves the best speed-accuracy trade-off on the MS COCO dataset, with 28.1% AP at 142 FPS, 37.4% AP at 52 FPS, and 45.1% AP with multi-scale testing at 1.4 FPS. We use the same approach to estimate 3D bounding box in the KITTI benchmark and human pose on the COCO keypoint dataset. Our method performs competitively with sophisticated multi-stage methods and runs in real-time.
+Trained as much as I could (41 epochs).  
 
-## Highlights
+For training, I had to truncate the training dataset so that the annotations json file were loaded into my computer's memory.  
+Logs for training is provided [here](exp/ctdet/dfsh_mbnv2/logs_2022-03-28-19-35/log.txt) and [opts](exp/ctdet/dfsh_mbnv2/logs_2022-03-28-19-35/opt.txt).
 
-- **Simple:** One-sentence method summary: use keypoint detection technic to detect the bounding box center point and regress to all other object properties like bounding box size, 3d information, and pose.
+5. Test.
+>python test.py ctdet --exp_id dfsh_mbnv2 --keep_res --load_model ../exp/ctdet/dfsh_mbnv2/model_best.pth --dataset dfashion --arch mbnv2
 
-- **Versatile:** The same framework works for object detection, 3d bounding box estimation, and multi-person pose estimation with minor modification.
+| Average Precision  (AP)  | IoU=0.50:0.95 | area=   all   | maxDets=100  = 0.199 |  
+| Average Precision  (AP)  | IoU=0.50 -----| area=   all   | maxDets=100  = 0.283 |  
+| Average Precision  (AP)  | IoU=0.75 -----| area=   all   | maxDets=100  = 0.229 |  
+| Average Precision  (AP)  | IoU=0.50:0.95 | area= small   | maxDets=100  = 0.000 |  
+| Average Precision  (AP)  | IoU=0.50:0.95 | area=medium   | maxDets=100  = 0.280 |  
+| Average Precision  (AP)  | IoU=0.50:0.95 | area= large   | maxDets=100  = 0.199 |  
 
-- **Fast:** The whole process in a single network feedforward. No NMS post processing is needed. Our DLA-34 model runs at *52* FPS with *37.4* COCO AP.
+| Average Recall     (AR)  | IoU=0.50:0.95 | area=   all | maxDets=  1  = 0.610 |  
+| Average Recall     (AR)  | IoU=0.50:0.95 | area=   all | maxDets= 10  = 0.691 |  
+| Average Recall     (AR)  | IoU=0.50:0.95 | area=   all | maxDets=100  = 0.699 |  
+| Average Recall     (AR)  | IoU=0.50:0.95 | area= small | maxDets=100  = 0.025 |  
+| Average Recall     (AR)  | IoU=0.50:0.95 | area=medium | maxDets=100  = 0.546 |  
+| Average Recall     (AR)  | IoU=0.50:0.95 | area= large | maxDets=100  = 0.701 |  
 
-- **Strong**: Our best single model achieves *45.1*AP on COCO test-dev.
+After training, the network turned out to be silly, but it can still find some objects.
 
-- **Easy to use:** We provide user friendly testing API and webcam demos.
+## Some results for inference:
 
-## Main results
-
-### Object Detection on COCO validation
-
-| Backbone     |  AP / FPS | Flip AP / FPS|  Multi-scale AP / FPS |
-|--------------|-----------|--------------|-----------------------|
-|Hourglass-104 | 40.3 / 14 | 42.2 / 7.8   | 45.1 / 1.4            |
-|DLA-34        | 37.4 / 52 | 39.2 / 28    | 41.7 / 4              |
-|ResNet-101    | 34.6 / 45 | 36.2 / 25    | 39.3 / 4              |
-|ResNet-18     | 28.1 / 142| 30.0 / 71    | 33.2 / 12             |
-
-### Keypoint detection on COCO validation
-
-| Backbone     |  AP       |  FPS         |
-|--------------|-----------|--------------|
-|Hourglass-104 | 64.0      |    6.6       |
-|DLA-34        | 58.9      |    23        |
-
-### 3D bounding box detection on KITTI validation
-
-|Backbone|FPS|AP-E|AP-M|AP-H|AOS-E|AOS-M|AOS-H|BEV-E|BEV-M|BEV-H| 
-|--------|---|----|----|----|-----|-----|-----|-----|-----|-----|
-|DLA-34  |32 |96.9|87.8|79.2|93.9 |84.3 |75.7 |34.0 |30.5 |26.8 |
-
-
-All models and details are available in our [Model zoo](readme/MODEL_ZOO.md).
-
-## Installation
-
-Please refer to [INSTALL.md](readme/INSTALL.md) for installation instructions.
-
-## Use CenterNet
-
-We support demo for image/ image folder, video, and webcam. 
-
-First, download the models (By default, [ctdet_coco_dla_2x](https://drive.google.com/open?id=1pl_-ael8wERdUREEnaIfqOV_VF2bEVRT) for detection and 
-[multi_pose_dla_3x](https://drive.google.com/open?id=1PO1Ax_GDtjiemEmDVD7oPWwqQkUu28PI) for human pose estimation) 
-from the [Model zoo](readme/MODEL_ZOO.md) and put them in `CenterNet_ROOT/models/`.
-
-For object detection on images/ video, run:
-
-~~~
-python demo.py ctdet --demo /path/to/image/or/folder/or/video --load_model ../models/ctdet_coco_dla_2x.pth
-~~~
-We provide example images in `CenterNet_ROOT/images/` (from [Detectron](https://github.com/facebookresearch/Detectron/tree/master/demo)). If set up correctly, the output should look like
-
-<p align="center"> <img src='readme/det1.png' align="center" height="230px"> <img src='readme/det2.png' align="center" height="230px"> </p>
-
-For webcam demo, run     
-
-~~~
-python demo.py ctdet --demo webcam --load_model ../models/ctdet_coco_dla_2x.pth
-~~~
-
-Similarly, for human pose estimation, run:
-
-~~~
-python demo.py multi_pose --demo /path/to/image/or/folder/or/video/or/webcam --load_model ../models/multi_pose_dla_3x.pth
-~~~
-The result for the example images should look like:
-
-<p align="center">  <img src='readme/pose1.png' align="center" height="200px"> <img src='readme/pose2.png' align="center" height="200px"> <img src='readme/pose3.png' align="center" height="200px">  </p>
-
-You can add `--debug 2` to visualize the heatmap outputs.
-You can add `--flip_test` for flip test.
-
-To use this CenterNet in your own project, you can 
-
-~~~
-import sys
-CENTERNET_PATH = /path/to/CenterNet/src/lib/
-sys.path.insert(0, CENTERNET_PATH)
-
-from detectors.detector_factory import detector_factory
-from opts import opts
-
-MODEL_PATH = /path/to/model
-TASK = 'ctdet' # or 'multi_pose' for human pose estimation
-opt = opts().init('{} --load_model {}'.format(TASK, MODEL_PATH).split(' '))
-detector = detector_factory[opt.task](opt)
-
-img = image/or/path/to/your/image/
-ret = detector.run(img)['results']
-~~~
-`ret` will be a python dict: `{category_id : [[x1, y1, x2, y2, score], ...], }`
-
-## Benchmark Evaluation and Training
-
-After [installation](readme/INSTALL.md), follow the instructions in [DATA.md](readme/DATA.md) to setup the datasets. Then check [GETTING_STARTED.md](readme/GETTING_STARTED.md) to reproduce the results in the paper.
-We provide scripts for all the experiments in the [experiments](experiments) folder.
-
-## Develop
-
-If you are interested in training CenterNet in a new dataset, use CenterNet in a new task, or use a new network architecture for CenterNet, please refer to [DEVELOP.md](readme/DEVELOP.md). Also feel free to send us emails for discussions or suggestions.
-
-## Third-party resources
-
-- CenterNet + embedding learning based tracking: [FairMOT](https://github.com/ifzhang/FairMOT) from [Yifu Zhang](https://github.com/ifzhang).
-- Detectron2 based implementation: [CenterNet-better](https://github.com/FateScript/CenterNet-better) from [Feng Wang](https://github.com/FateScript).
-- Keras Implementation: [keras-centernet](https://github.com/see--/keras-centernet) from [see--](https://github.com/see--) and [keras-CenterNet](https://github.com/xuannianz/keras-CenterNet) from [xuannianz](https://github.com/xuannianz).
-- MXnet implementation: [mxnet-centernet](https://github.com/Guanghan/mxnet-centernet) from [Guanghan Ning](https://github.com/Guanghan).
-- Stronger human open estimation models: [centerpose](https://github.com/tensorboy/centerpose) from [tensorboy](https://github.com/tensorboy).
-- TensorRT extension with ONNX models: [TensorRT-CenterNet](https://github.com/CaoWGG/TensorRT-CenterNet) from [Wengang Cao](https://github.com/CaoWGG).
-- CenterNet + DeepSORT tracking implementation: [centerNet-deep-sort](https://github.com/kimyoon-young/centerNet-deep-sort) from [kimyoon-young](https://github.com/kimyoon-young).
-- Blogs on training CenterNet on custom datasets (in Chinese): [ships](https://blog.csdn.net/weixin_42634342/article/details/97756458) from [Rhett Chen](https://blog.csdn.net/weixin_42634342) and [faces](https://blog.csdn.net/weixin_41765699/article/details/100118353) from [linbior](https://me.csdn.net/weixin_41765699).
+![](images/demos1.jpg)  
+![](images/demos2.jpg)  
+![](images/demos3.jpg)  
 
 
-## License
-
-CenterNet itself is released under the MIT License (refer to the LICENSE file for details).
-Portions of the code are borrowed from [human-pose-estimation.pytorch](https://github.com/Microsoft/human-pose-estimation.pytorch) (image transform, resnet), [CornerNet](https://github.com/princeton-vl/CornerNet) (hourglassnet, loss functions), [dla](https://github.com/ucbdrive/dla) (DLA network), [DCNv2](https://github.com/CharlesShang/DCNv2)(deformable convolutions), [tf-faster-rcnn](https://github.com/endernewton/tf-faster-rcnn)(Pascal VOC evaluation) and [kitti_eval](https://github.com/prclibo/kitti_eval) (KITTI dataset evaluation). Please refer to the original License of these projects (See [NOTICE](NOTICE)).
-
-## Citation
-
-If you find this project useful for your research, please use the following BibTeX entry.
-
-    @inproceedings{zhou2019objects,
-      title={Objects as Points},
-      author={Zhou, Xingyi and Wang, Dequan and Kr{\"a}henb{\"u}hl, Philipp},
-      booktitle={arXiv preprint arXiv:1904.07850},
-      year={2019}
-    }
+     
