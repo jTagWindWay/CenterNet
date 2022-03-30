@@ -458,6 +458,13 @@ coco_class_name = [
      'scissors', 'teddy bear', 'hair drier', 'toothbrush'
 ]
 
+dfashion_class_name = [
+        'short_sleeved_shirt', 'long_sleeved_shirt',
+        'short_sleeved_outwear', 'long_sleeved_outwear', 'vest',
+        'sling', 'shorts', 'trousers', 'skirt', 'short_sleeved_dress',
+        'long_sleeved_dress', 'vest_dress', 'sling_dress'
+]
+
 color_list = np.array(
         [
             1.000, 1.000, 1.000,
