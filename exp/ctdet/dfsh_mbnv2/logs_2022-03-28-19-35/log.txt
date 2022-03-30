@@ -1,0 +1,41 @@
+2022-03-28-20-02: epoch: 1 |loss 14.407089 | hm_loss 10.347984 | wh_loss 38.048006 | off_loss 0.254304 | time 25.983333 | 
+2022-03-28-20-28: epoch: 2 |loss 4.053718 | hm_loss 2.786962 | wh_loss 10.172002 | off_loss 0.249556 | time 26.100000 | 
+2022-03-28-20-54: epoch: 3 |loss 3.304871 | hm_loss 2.402190 | wh_loss 6.544446 | off_loss 0.248237 | time 26.266667 | 
+2022-03-28-21-19: epoch: 4 |loss 2.970280 | hm_loss 2.228513 | wh_loss 4.938833 | off_loss 0.247884 | time 24.933333 | 
+2022-03-28-21-44: epoch: 5 |loss 2.783216 | hm_loss 2.107708 | wh_loss 4.283252 | off_loss 0.247183 | time 25.166667 | loss 2.667804 | hm_loss 2.020173 | wh_loss 3.919021 | off_loss 0.255729 | time 8.333333 | 
+2022-03-28-22-19: epoch: 6 |loss 2.647535 | hm_loss 2.008367 | wh_loss 3.926310 | off_loss 0.246537 | time 26.033333 | 
+2022-03-28-22-43: epoch: 7 |loss 2.548550 | hm_loss 1.931294 | wh_loss 3.709912 | off_loss 0.246265 | time 24.033333 | 
+2022-03-28-23-09: epoch: 8 |loss 2.466433 | hm_loss 1.869248 | wh_loss 3.509251 | off_loss 0.246260 | time 25.883333 | 
+2022-03-28-23-33: epoch: 9 |loss 2.403173 | hm_loss 1.818676 | wh_loss 3.388780 | off_loss 0.245618 | time 24.450000 | 
+2022-03-28-23-58: epoch: 10 |loss 2.342706 | hm_loss 1.770420 | wh_loss 3.271887 | off_loss 0.245098 | time 24.550000 | loss 2.247825 | hm_loss 1.689884 | wh_loss 3.072516 | off_loss 0.250690 | time 8.400000 | 
+2022-03-29-00-32: epoch: 11 |loss 2.298260 | hm_loss 1.735698 | wh_loss 3.181718 | off_loss 0.244391 | time 25.750000 | 
+2022-03-29-00-56: epoch: 12 |loss 2.248167 | hm_loss 1.694189 | wh_loss 3.095290 | off_loss 0.244449 | time 24.566667 | 
+2022-03-29-01-21: epoch: 13 |loss 2.213476 | hm_loss 1.664444 | wh_loss 3.047735 | off_loss 0.244258 | time 24.566667 | 
+2022-03-29-01-46: epoch: 14 |loss 2.181911 | hm_loss 1.638802 | wh_loss 2.992757 | off_loss 0.243834 | time 24.616667 | 
+2022-03-29-02-10: epoch: 15 |loss 2.150580 | hm_loss 1.612919 | wh_loss 2.937847 | off_loss 0.243876 | time 24.616667 | loss 2.099976 | hm_loss 1.564375 | wh_loss 2.879673 | off_loss 0.247633 | time 8.333333 | 
+2022-03-29-02-44: epoch: 16 |loss 2.121645 | hm_loss 1.589381 | wh_loss 2.887236 | off_loss 0.243541 | time 25.150000 | 
+2022-03-29-03-08: epoch: 17 |loss 2.101352 | hm_loss 1.573415 | wh_loss 2.845495 | off_loss 0.243388 | time 24.616667 | 
+2022-03-29-03-33: epoch: 18 |loss 2.073380 | hm_loss 1.549570 | wh_loss 2.807365 | off_loss 0.243073 | time 24.600000 | 
+2022-03-29-13-41: epoch: 19 |loss 2.056075 | hm_loss 1.534751 | wh_loss 2.787567 | off_loss 0.242567 | time 24.133333 | 
+2022-03-29-14-05: epoch: 20 |loss 2.033462 | hm_loss 1.516506 | wh_loss 2.753093 | off_loss 0.241647 | time 24.733333 | loss 2.050497 | hm_loss 1.533590 | wh_loss 2.707443 | off_loss 0.246163 | time 8.266667 | 
+2022-03-29-14-38: epoch: 21 |loss 2.017297 | hm_loss 1.502700 | wh_loss 2.725314 | off_loss 0.242066 | time 24.816667 | 
+2022-03-29-15-03: epoch: 22 |loss 1.996980 | hm_loss 1.487499 | wh_loss 2.683270 | off_loss 0.241155 | time 24.716667 | 
+2022-03-29-15-28: epoch: 23 |loss 1.978857 | hm_loss 1.471477 | wh_loss 2.659663 | off_loss 0.241413 | time 24.800000 | 
+2022-03-29-15-53: epoch: 24 |loss 1.967578 | hm_loss 1.461517 | wh_loss 2.643344 | off_loss 0.241726 | time 24.850000 | 
+2022-03-29-16-18: epoch: 25 |loss 1.946073 | hm_loss 1.443605 | wh_loss 2.617498 | off_loss 0.240718 | time 24.866667 | loss 1.925929 | hm_loss 1.423174 | wh_loss 2.571337 | off_loss 0.245622 | time 8.200000 | 
+2022-03-29-16-51: epoch: 26 |loss 1.930223 | hm_loss 1.429310 | wh_loss 2.610267 | off_loss 0.239886 | time 24.733333 | 
+2022-03-29-17-16: epoch: 27 |loss 1.912018 | hm_loss 1.414527 | wh_loss 2.570933 | off_loss 0.240397 | time 24.866667 | 
+2022-03-29-17-40: epoch: 28 |loss 1.901975 | hm_loss 1.404817 | wh_loss 2.571742 | off_loss 0.239983 | time 24.733333 | 
+2022-03-29-18-05: epoch: 29 |loss 1.884815 | hm_loss 1.390030 | wh_loss 2.548922 | off_loss 0.239893 | time 24.650000 | 
+2022-03-29-18-30: epoch: 30 |loss 1.873723 | hm_loss 1.381668 | wh_loss 2.526093 | off_loss 0.239446 | time 24.683333 | loss 1.877674 | hm_loss 1.377468 | wh_loss 2.551242 | off_loss 0.245081 | time 8.816667 | 
+2022-03-29-19-03: epoch: 31 |loss 1.861442 | hm_loss 1.370202 | wh_loss 2.511370 | off_loss 0.240103 | time 24.683333 | 
+2022-03-29-19-28: epoch: 32 |loss 1.854147 | hm_loss 1.364103 | wh_loss 2.499669 | off_loss 0.240077 | time 24.733333 | 
+2022-03-29-19-52: epoch: 33 |loss 1.840145 | hm_loss 1.352936 | wh_loss 2.477393 | off_loss 0.239469 | time 24.483333 | 
+2022-03-29-20-17: epoch: 34 |loss 1.827369 | hm_loss 1.342494 | wh_loss 2.456751 | off_loss 0.239200 | time 24.783333 | 
+2022-03-29-20-42: epoch: 35 |loss 1.820857 | hm_loss 1.335794 | wh_loss 2.458422 | off_loss 0.239221 | time 24.616667 | loss 1.840162 | hm_loss 1.353415 | wh_loss 2.444835 | off_loss 0.242264 | time 8.316667 | 
+2022-03-29-21-16: epoch: 36 |loss 1.814127 | hm_loss 1.330252 | wh_loss 2.447965 | off_loss 0.239079 | time 25.316667 | 
+2022-03-29-21-40: epoch: 37 |loss 1.803553 | hm_loss 1.322532 | wh_loss 2.422997 | off_loss 0.238721 | time 24.750000 | 
+2022-03-29-22-05: epoch: 38 |loss 1.793147 | hm_loss 1.312301 | wh_loss 2.422995 | off_loss 0.238547 | time 25.133333 | 
+2022-03-29-22-31: epoch: 39 |loss 1.785823 | hm_loss 1.306041 | wh_loss 2.413885 | off_loss 0.238394 | time 25.650000 | 
+2022-03-29-22-56: epoch: 40 |loss 1.779891 | hm_loss 1.301088 | wh_loss 2.400191 | off_loss 0.238784 | time 25.283333 | loss 1.820025 | hm_loss 1.335794 | wh_loss 2.372551 | off_loss 0.246976 | time 7.983333 | 
+2022-03-29-23-29: epoch: 41 |loss 1.771016 | hm_loss 1.293746 | wh_loss 2.391794 | off_loss 0.238090 | time 24.483333 | 
