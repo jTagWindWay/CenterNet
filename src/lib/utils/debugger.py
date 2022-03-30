@@ -45,6 +45,8 @@ class Debugger(object):
       self.names = coco_class_name
     elif num_classes == 20 or dataset == 'pascal':
       self.names = pascal_class_name
+    elif num_classes == 13 or dataset == 'dfashion':
+      self.names = dfashion_class_name
     elif dataset == 'gta':
       self.names = gta_class_name
       self.focal_length = 935.3074360871937
